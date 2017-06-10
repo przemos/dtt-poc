@@ -1,0 +1,69 @@
+extends ../layout
+
+block styles
+	// Site stylesheet
+	link(rel='stylesheet', href='/app/styles/frontend.css')
+
+block content
+	.center-container(v-cloak)
+		.panel
+			.bg
+			.bg-overlay
+			.content
+				form(action='/auth/local', method='POST')
+				
+
+					header= "Login"
+					.form-group
+						label(for='username')= "UsernameOrEmail"
+						input(type='text', name='username', id='username', placeholder="YourUsernameOrEmailAddress")
+						.hint
+					.form-group
+						label(for='password')= "PasswordSC"
+						input(type='password', name='password', id='password', placeholder="Password")
+						.hint= "PasswordlessLoginHint"
+
+					.flash
+						if messages.error
+							.alert.alert-danger
+								for error in messages.error
+									div= error.msg
+						if messages.info
+							.alert.alert-success
+								for info in messages.info
+									div= info.msg
+
+					if messages.error
+						.forgot
+							a(href='/forgot')= "ForgotYourPassword"
+
+					.form-group
+						button.signup(type='submit')= "Login"
+
+					if socialAuth
+						.or
+							span= "or"
+
+						.socials
+							if socialAuth.facebook
+								a.group.facebook(href="/auth/facebook", title="LoginFacebook") 
+									i.fa.fa-facebook
+							if socialAuth.google
+								a.group.google(href="/auth/google", title="LoginGoogle")
+									i.fa.fa-google-plus
+							if socialAuth.twitter
+								a.group.twitter(href="/auth/twitter", title="LoginTwitter")
+									i.fa.fa-twitter
+							if socialAuth.github
+								a.group.github(href="/auth/github", title="LoginGithub")
+									i.fa.fa-github
+
+					if features.disableSignUp !== true
+						hr
+						.alreadyLink
+							span= "DontHaveAnAccount"
+							a(href='/signup')= "SignUp"
+
+block scripts
+	script(src='/app/frontend.js')
+					
