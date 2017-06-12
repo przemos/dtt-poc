@@ -1,0 +1,43 @@
+import * as TestStoreOps from "./types";
+import getters from "./getters";
+
+const state = {
+	currentIndex: 0,
+	questions: []
+};
+
+const mutations = {
+
+	[TestStoreOps.GO_NEXT] (state) {
+		state.currentIndex++;
+	},
+
+	[TestStoreOps.GO_PREV] (state) {
+		state.currentIndex--;
+	},
+
+	[TestStoreOps.ANSWER] (state, answer) {
+		state.questions[state.currentIndex].answer = answer;
+	},
+
+	[TestStoreOps.GO_FIRST] (state) {
+		state.currentIndex = 0;
+	},
+	[TestStoreOps.LOAD_QUESTIONS] (state, questions) {
+		state.questions = [];
+
+		questions.forEach(q => {
+			state.currentIndex = 0;
+			q.answer = null;
+			state.questions.push(q);
+		});
+	}
+};
+
+
+export default {
+	namespaced: true,
+	state,
+	getters,
+	mutations
+};

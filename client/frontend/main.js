@@ -1,6 +1,6 @@
 "use strict";
 
-import style from "vue-material/dist/vue-material.css";
+import static_css from "./css/somestatic.css";
 
 
 console.log("Frontend loaded!");

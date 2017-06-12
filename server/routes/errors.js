@@ -5,9 +5,10 @@ let logger  = require("../core/logger");
 
 let response  = require("../core/response");
 
-module.exports = function(app, db) {
+module.exports = function(app) {
 
 	app.use(function(err, req, res, next) {
+
 		if (!err) {
 			return next();
 		}
@@ -30,22 +31,25 @@ module.exports = function(app, db) {
 	});
 
 	app.use(function(req, res) {
-		res.status(404);
-		
-		// Respond with html page
-		if (req.accepts("html")) {
-			let err = new Error("404 Page Not Found");
-			err.status = 404;
-			return res.render("404", {
-				url: req.originalUrl,
-				error: err
-			});
-		}
 
-		// Respond with json
-		if (req.accepts("json")) {
-			return response.json(res, null, response.NOT_FOUND);
-		}
+		return res.redirect("/");
+
+		// res.status(404);
+        //
+		// // Respond with html page
+		// if (req.accepts("html")) {
+		// 	let err = new Error("404 Page Not Found");
+		// 	err.status = 404;
+		// 	return res.render("404", {
+		// 		url: req.originalUrl,
+		// 		error: err
+		// 	});
+		// }
+        //
+		// // Respond with json
+		// if (req.accepts("json")) {
+		// 	return response.json(res, null, response.NOT_FOUND);
+		// }
 	});
 
 };

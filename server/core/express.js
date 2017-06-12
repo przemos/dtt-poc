@@ -74,11 +74,15 @@ function initMiddleware(app) {
 
 	if (!config.isDevMode()) {
 
-
 		// Setting up static folder
 		app.use(express["static"](path.join(serverFolder, "public")));
-
 	}
+
+	app.use("/images", express["static"](path.join(serverFolder, "public", "images")));
+	app.use("/stylesheets", express["static"](path.join(serverFolder, "public", "stylesheets")));
+	app.use("/javascripts", express["static"](path.join(serverFolder, "public", "javascripts")));
+
+
 	// Favicon
 	app.use(favicon(path.join(serverFolder, "public", "favicon.ico")));
 
