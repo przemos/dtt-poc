@@ -3,6 +3,12 @@
 		<div style="display:block; margin-right:0; text-align: right; margin-top:10px">
 			<Countdown timespan="300"></Countdown>
 		</div>
+
+		<br>
+		<div>
+			<Webcam supcio="test supcio" />
+		</div>
+
 		<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
 		<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
 	</div>
@@ -10,6 +16,7 @@
 <script>
 
 	import Countdown from "../../components/Countdown.vue";
+	import Webcam from "../../components/Webcam.vue";
 
 	import Review from "./review.vue";
 	import Question from "./question.vue";
@@ -38,7 +45,7 @@
 		computed : {
 			...mapGetters(['totalCount'])
 		},
-		components: {Countdown, "question": Question, "review": Review},
+		components: {Countdown, "question": Question, "review": Review, Webcam},
 		methods: {
 			changeView: function (target) {
 

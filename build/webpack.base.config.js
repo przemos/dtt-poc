@@ -18,7 +18,8 @@ module.exports = {
 			"jquery",
 			"axios",
 			"toastr",
-			"vue-form-generator"
+			"vue-form-generator",
+			"tracking"
 		],
 		frontend: ["./client/frontend/main.js"]
 	},

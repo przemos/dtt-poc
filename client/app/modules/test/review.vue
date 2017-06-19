@@ -20,7 +20,7 @@
 		</table>
 		<div style="margin-top:20px">
 			<input class="button" type="button" value="Review All" v-on:click="showQuestions()">
-			<input class="button" type="button" value="End">
+			<input class="button" type="button" value="End" v-on:click="endTest()">
 		</div>
 
 	</div>
@@ -30,6 +30,7 @@
 <script>
 
 	import {mapGetters} from 'vuex'
+	import * as TestStoreOps from '../teststore/types';
 
 	export default {
 
@@ -41,6 +42,10 @@
 		methods: {
 			showQuestions: function () {
 				this.$emit('action', 'question');
+			},
+			endTest : function () {
+				this.$store.commit(TestStoreOps.TEST_ENDED);
+				this.$router.push('/result')
 			}
 		}
 	};
