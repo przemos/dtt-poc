@@ -5,7 +5,7 @@
 			<caption class="heading-small">Summary</caption>
 			<tbody>
 			<tr>
-				<td>Number of complete questions</td>
+				<td>Total number of questions</td>
 				<td>{{totalCount}}</td>
 			</tr>
 			<tr>
