@@ -21,6 +21,7 @@
 
 		mounted() {
 
+			this.$store.commit(TestStoreOps.TEST_STARTED);
 			axios.get("/questions")
 				.then(response => {
 					// TODO - should be actions

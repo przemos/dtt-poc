@@ -3,8 +3,11 @@ import getters from "./getters";
 
 const state = {
 	currentIndex: 0,
-	questions: []
-};
+	questions: [],
+	timeStarted: null,
+	timeEnded: null
+}
+;
 
 const mutations = {
 
@@ -23,6 +26,14 @@ const mutations = {
 	[TestStoreOps.GO_FIRST] (state) {
 		state.currentIndex = 0;
 	},
+
+	[TestStoreOps.TEST_STARTED] (state) {
+		state.timeStarted = new Date();
+	},
+	[TestStoreOps.TEST_ENDED] (state) {
+		state.timeEnded = new Date();
+	},
+
 	[TestStoreOps.LOAD_QUESTIONS] (state, questions) {
 		state.questions = [];
 
