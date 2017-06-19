@@ -28,7 +28,6 @@
 
 <script>
 	import {mapGetters} from 'vuex'
-	import Question from "./question.vue";
 	import * as TestStoreOps from '../teststore/types';
 
 	export default {

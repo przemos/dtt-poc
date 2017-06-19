@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<div style="display:block; margin-right:0; text-align: right; margin-top:10px">
 			<Countdown timespan="300"></Countdown>
 		</div>
@@ -11,12 +10,12 @@
 <script>
 
 	import Countdown from "../../components/Countdown.vue";
-	import Question from "./question.vue";
+
 	import Review from "./review.vue";
+	import Question from "./question.vue";
 	import * as TestStoreOps from "../teststore/types";
 	import axios from "axios";
 	import {mapGetters} from 'vuex'
-
 
 	export default {
 
