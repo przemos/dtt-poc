@@ -133,6 +133,7 @@
     "marked": "0.3.6",
     "mocha": "3.4.2",
     "nightwatch": "0.9.15",
+    "nodemon": "^1.11.0",
     "postcss-loader": "2.0.5",
     "precss": "1.4.0",
     "raw-loader": "0.5.1",
