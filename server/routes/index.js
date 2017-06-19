@@ -18,9 +18,9 @@ module.exports = function (app, db) {
 
 
 	// Handle Auth routes
-	require("./auth")(app, db);
+	//require("./auth")(app, db);
 
-	require("./account")(app)
+	//require("./account")(app)
 
 	// Handle errors
 	require("./errors")(app);

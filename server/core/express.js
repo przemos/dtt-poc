@@ -236,7 +236,7 @@ module.exports = function () {
 	initSession(app);
 
 	// Init auth and CSRF module
-	initAuth(app);
+	//initAuth(app);
 
 	// Init webpack devserver & hot reload module
 	initWebpack(app);
