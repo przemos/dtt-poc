@@ -7,11 +7,12 @@
 </template>
 <script>
 	import * as tracking from 'exports-loader?tracking!tracking';
+	import {face} from "tracking/build/data/face";
 
 	export default {
 		mounted() {
 			console.log(this.supcio);
-			var tracker = new tracking.ColorTracker("magenta");
+			var tracker = new tracking.ObjectTracker("face");
 			tracking.track("#userWebcam", tracker, {camera: true});
 		},
 		props: ["supcio"],
