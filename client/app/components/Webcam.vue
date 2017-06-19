@@ -11,7 +11,7 @@
 	export default {
 		mounted() {
 			console.log(this.supcio);
-			var tracker = new tracking.ObjectTracker("face");
+			var tracker = new tracking.ColorTracker("magenta");
 			tracking.track("#userWebcam", tracker, {camera: true});
 		},
 		props: ["supcio"],
