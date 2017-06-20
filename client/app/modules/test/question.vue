@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<h1 class="heading-large">Question {{currentIndex + 1}} of {{totalCount}}</h1>
-		<h2 class="heading-medium">{{current.text}}</h2>
+		<h1 class="heading-large"><span class="heading-secondary">Question {{currentIndex + 1}} of {{totalCount}}</span>{{current.text}}
+		</h1>
 		<form id="questionForm">
 			<div class="form-group">
 				<fieldset>
