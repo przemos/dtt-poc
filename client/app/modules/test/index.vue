@@ -57,11 +57,8 @@
 					this.mode = "review";
 				} else {
 					this.mode = "question";
-					this.$store.commit(TestStoreOps.GO_FIRST);
 				}
 			}
 		}
 	};
-
-
 </script>

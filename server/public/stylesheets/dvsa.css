@@ -7115,6 +7115,7 @@ strong {
 }
 .c-transaction-details {
 	width: 100%;
+	color: #fff;
 	border-top-width: 1px;
 	border-top-style: solid;
 	border-top-color: #fff;
