@@ -29,20 +29,20 @@
 			</table>
 		</header>
 		<div class="grid-row">
-			<div class="column-one-third" style="text-align:left">
+			<div class="column-one-third" >
 				<div class="data">
 					<span class="data-item bold-xxlarge">{{correctlyAnsweredText}}</span>
 					<span class="data-item bold-xsmall">Correct answers</span>
 				</div>
 			</div>
-			<div class="column-one-third" style="text-align:center">
+			<div class="column-one-third" >
 				<div class="data">
 					<span class="data-item bold-xxlarge">{{leftUnansweredText}}</span>
 					<span class="data-item bold-xsmall" >Left unanswered</span>
 				</div>
 			</div>
 			<div class="column-one-third">
-				<div class="data" style="text-align:right">
+				<div class="data">
 					<span class="data-item bold-xxlarge">{{wrongText}}</span>
 					<span class="data-item bold-xsmall">Wrong answers</span>
 				</div>
@@ -77,10 +77,10 @@
 
 				let durationText = "";
 				if (duration.minutes > 0) {
-					durationText += duration.minutes + " minutes";
+					durationText += duration.minutes + " m ";
 				}
 				if (duration.seconds > 0) {
-					durationText += duration.seconds + " seconds";
+					durationText += duration.seconds + " s";
 				}
 
 				return durationText;

@@ -1,8 +1,24 @@
 <template>
 	<div>
-		<div style="display:block; margin-right:0; text-align: right; margin-top:10px">
-			<Countdown timespan="300"></Countdown>
+		<div class="topbar"  id="camera-status">
+			<div class="grid-row">
+
+				<div class="column-one-third">
+					<div class="badge--success"><i class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct</div>
+				</div>
+
+				<div class="column-one-third">
+					<p></p>
+				</div>
+
+				<div class="column-one-third">
+					<Countdown timespan="300" style=""></Countdown>
+
+				</div>
+
+			</div>
 		</div>
+
 		<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
 		<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
 	</div>
@@ -29,13 +45,15 @@
 				})
 				.catch(e => {
 				});
+			setTimeout(function (){ $("#camera-status").stick_in_parent();}, 1000);
+
 		},
 		data: function () {
 			return {
 				mode: "question"
 			};
 		},
-		computed : {
+		computed: {
 			...mapGetters(['totalCount'])
 		},
 		components: {Countdown, "question": Question, "review": Review},
@@ -51,3 +69,23 @@
 		}
 	};
 </script>
+
+<style>
+
+
+	.topbar {
+		display:block;
+		padding-top:10px;
+		z-index:999;
+		background-color:white;
+	}
+
+	.blink {
+		animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+	}
+
+	@keyframes blinker {
+		from { opacity: 1; }
+		to { opacity: 0; }
+	}
+</style>
