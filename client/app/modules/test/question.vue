@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<h1 class="heading-large">Question {{currentIndex + 1}} of {{totalCount}}</h1>
 		<h2 class="heading-medium">{{current.text}}</h2>
 		<form id="questionForm">
