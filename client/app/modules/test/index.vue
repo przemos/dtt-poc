@@ -1,10 +1,15 @@
 <template>
 	<div>
-		<div class="topbar"  id="camera-status">
+		<div class="topbar" id="camera-status">
 			<div class="grid-row">
 
 				<div class="column-one-third">
-					<div class="badge--success"><i class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct</div>
+					<div v-bind:class="[isInCamera ? '' : 'camera-status-hidden', 'badge--success']"><i
+						class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct
+					</div>
+					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--warn']"><i class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Your face is off the camera
+					</div>
+
 				</div>
 
 				<div class="column-one-third">
@@ -18,10 +23,9 @@
 			</div>
 		</div>
 
-
 		<br>
 		<div>
-			<Webcam supcio="test supcio" />
+			<Webcam style="visibility:hidden; position:absolute"/>
 		</div>
 
 		<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
@@ -52,15 +56,26 @@
 				.catch(e => {
 				});
 
-			this.$on('potentialFraudFound', function(value){
-    			console.log(value);
+			var self = this;
+
+			this.$on('webcamEvent', function (value) {
+			console.log(value);
+				if (value.type === "OK") {
+					self.isInCamera = true;
+				} else if (value.type === 'NOFACE') {
+					self.isInCamera = false;
+				}
+
 			});
-			setTimeout(function (){ $("#camera-status").stick_in_parent();}, 1000);
+			setTimeout(function () {
+				$("#camera-status").stick_in_parent();
+			}, 1000);
 
 		},
 		data: function () {
 			return {
-				mode: "question"
+				mode: "question",
+				isInCamera: true
 			};
 		},
 		computed: {
@@ -83,11 +98,15 @@
 <style>
 
 
+	.camera-status-hidden {
+		display: none;
+	}
+
 	.topbar {
-		display:block;
-		padding-top:10px;
-		z-index:999;
-		background-color:white;
+		display: block;
+		padding-top: 10px;
+		z-index: 999;
+		background-color: white;
 	}
 
 	.blink {
@@ -95,7 +114,11 @@
 	}
 
 	@keyframes blinker {
-		from { opacity: 1; }
-		to { opacity: 0; }
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
 	}
 </style>
