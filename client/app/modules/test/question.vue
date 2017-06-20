@@ -16,8 +16,8 @@
 				</fieldset>
 			</div>
 			<div class="navigation-buttons">
-				<input class="button" type="button" value="Previous" :disabled="prevDisabled()" v-on:click="prev()">
-				<input class="button" type="button" value="Review" v-on:click="review()">
+				<input class="button" type="button" value="Previous" v-if="!prevDisabled()" v-on:click="prev()">
+				<input class="button" type="button" value="Review" style="background-color:dodgerblue" v-on:click="review()">
 
 				<input class="button button-right" type="button" :disabled="nextDisabled()"
 											v-on:click="next()" value="Next" v-if="!isLast">
