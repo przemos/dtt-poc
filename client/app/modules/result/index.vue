@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<header class="transaction-header" v-bind:class="[isPassed ? 'passed' : 'failed']" style=" margin-bottom:50px">
+		<header class="transaction-header" v-bind:class="[isPassed() ? 'passed' : 'failed']" style=" margin-bottom:50px">
 			<h1 class="transaction-header__title">Test complete</h1>
 			<p class="transaction-header__next-step">Please review your results</p>
 
@@ -13,7 +13,7 @@
 
 				<tr class="c-transaction-details__item">
 					<th class="c-transaction-details__key">Outcome</th>
-					<td class="c-transaction-details__value">{{outcomeText}}</td>
+					<td class="c-transaction-details__value">{{outcomeText()}}</td>
 				</tr>
 
 				<tr class="c-transaction-details__item">
@@ -28,17 +28,17 @@
 				</tbody>
 			</table>
 		</header>
-		<div class="grid-row">
-			<div class="column-one-third" >
+		<div class="grid-row" align="center">
+			<div class="column-one-third">
 				<div class="data">
 					<span class="data-item bold-xxlarge">{{correctlyAnsweredText}}</span>
 					<span class="data-item bold-xsmall">Correct answers</span>
 				</div>
 			</div>
-			<div class="column-one-third" >
+			<div class="column-one-third">
 				<div class="data">
 					<span class="data-item bold-xxlarge">{{leftUnansweredText}}</span>
-					<span class="data-item bold-xsmall" >Left unanswered</span>
+					<span class="data-item bold-xsmall">Left unanswered</span>
 				</div>
 			</div>
 			<div class="column-one-third">
@@ -48,11 +48,15 @@
 				</div>
 			</div>
 		</div>
-		<h2 class="heading-medium">Fraud markers detected:</h2>
-		<ol class="list-number">
-			<li>More than one face detected in the camera viewport count: <span class="data-item bold-xxlarge">{{numberOfTimesMoreThanOneFaceAppeared}}</span></li>
-			<li>Face kept off camera viewport count: <span class="data-item bold-xxlarge">{{numberOfTimesFaceWasKeptOffCamera}}</span></li>				
-		</ol>
+		<div v-if="fraudDetected()">
+			<div class="message--failure">
+				<h3 class="message__heading" style="margin : 0;">Cheat markers detected</h3>
+
+				<p v-if="isMoreThanOneFaceAppeared()">More than one face detected in the camera viewport</p>
+				<p v-if="isFaceKeptOffReason()">Face kept off camera viewport for too long</p>
+			</div>
+
+		</div>
 	</div>
 
 
@@ -89,32 +93,33 @@
 			scoreText: function () {
 				return Math.floor(this.$store.getters.correctlyAnsweredCount / this.$store.getters.totalCount * 100) + "%";
 			},
-
-			isPassed: function () {
-				return this.$store.getters.correctlyAnsweredCount === 3;
-			},
-			correctlyAnsweredText : function () {
+			correctlyAnsweredText: function () {
 				return this.$store.getters.correctlyAnsweredCount;
 			},
-			leftUnansweredText : function () {
-			  return this.$store.getters.unansweredCount;
+			leftUnansweredText: function () {
+				return this.$store.getters.unansweredCount;
 			},
-			wrongText : function () {
+			wrongText: function () {
 				return (this.$store.getters.totalCount - this.$store.getters.correctlyAnsweredCount - this.$store.getters.unansweredCount);
 			},
-			outcomeText: function () {
-				return this.$store.getters.correctlyAnsweredCount === 3 ? "Passed" : "Failed";
-			},
-			webcamEventsNumber: function () {
-				return this.$store.getters.webcamEvents.length;
-			},
-			numberOfTimesFaceWasKeptOffCamera: function () {
-				return this.$store.getters.numberOfTimesFaceWasKeptOffCamera;
-			},
-			numberOfTimesMoreThanOneFaceAppeared: function () {
-				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared;
-			},
 		},
+		methods: {
+			isPassed: function () {
+				return this.$store.getters.correctlyAnsweredCount === 3 && !this.fraudDetected();
+			},
+			outcomeText: function () {
+				return this.isPassed() ? "Passed" : "Failed";
+			},
+			fraudDetected: function () {
+				return this.isFaceKeptOffReason() || this.isMoreThanOneFaceAppeared();
+			},
+			isFaceKeptOffReason: function () {
+				return this.$store.getters.numberOfTimesFaceWasKeptOffCamera > 5;
+			},
+			isMoreThanOneFaceAppeared: function () {
+				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared > 1;
+			},
+		}
 	};
 
 </script>
@@ -123,6 +128,7 @@
 	.passed {
 		background-color: darkgreen;
 	}
+
 	.failed {
 		background-color: darkred;
 	}

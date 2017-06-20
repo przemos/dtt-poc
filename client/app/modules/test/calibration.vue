@@ -4,22 +4,18 @@
 		<p>
 			Please keep your face in center of camera until the calibration process finished.
 		</p>
-		<div class="text-center1">
-			<Webcam />	
-		</div>
-
-		
-		<div class="col-md-4" style="padding-top:15px;">
-			<div class="progress">
-				<div class="progress-bar progress-bar-striped active" style="width: 0%;" id="calibrationProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-					
-				</div>
-			</div>
-		</div>
-		<br>
-
 		<div class="message--important" >
 			<p>You won't be able to process with test until you finish calibration successfuly.</p>
+		</div>
+		<div >
+			<Webcam />
+		</div>
+
+		<div style="padding-top:15px;width:320px">
+			<div class="progress">
+				<div class="progress-bar progress-bar-striped active" style="width: 0%;" id="calibrationProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+				</div>
+			</div>
 		</div>
 
 		<p>
@@ -32,7 +28,7 @@
 <script>
 	import "!style-loader!css-loader!../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import Webcam from "../../components/Webcam.vue";
-	
+
 	export default {
 
 		mounted() {
@@ -42,7 +38,7 @@
 			this.$on('webcamEvent', function (value) {
 				console.log(value);
 
-				if(!self.calibrationDone) {				
+				if(!self.calibrationDone) {
 					if (value.type === "OK") {
 						self.currentProgress += 10;
 						calibrationProgressBar.css("width", self.currentProgress+"%");
@@ -62,14 +58,14 @@
 
 		},
 		data: function () {
-			return {				
+			return {
 				isInCamera: true,
 				currentProgress: 0,
 				calibrationDone: false
 			};
 		},
 		computed: {
-			
+
 		},
 		components: { Webcam },
 		methods: {

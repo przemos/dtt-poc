@@ -2,7 +2,7 @@ exports.questions = [
 	{
 		id: "Q1",
 		text: "How will a school crossing patrol signal you to stop?",
-		correctAnswer :0,
+		correctAnswer :2,
 		answers: [
 			{
 				"text": "By pointing to children on the opposite pavement",
@@ -21,7 +21,7 @@ exports.questions = [
 	{
 		id: "Q2",
 		text: "You see a pedestrian with a white stick and red band. This means that the person is",
-		correctAnswer: 0,
+		correctAnswer: 3,
 		answers: [
 			{
 				"text": "physically disabled",
@@ -40,7 +40,7 @@ exports.questions = [
 	{
 		id: "Q3",
 		"text": "A casualty has an injured arm. They can move it freely but it is bleeding. Why should you get them to keep it in a raised position?",
-		correctAnswer: 0,
+		correctAnswer: 3,
 		"answers": [
 			{
 				"text": "Because it will ease the pain"
