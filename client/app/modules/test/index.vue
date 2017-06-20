@@ -7,7 +7,7 @@
 					<div v-bind:class="[isInCamera ? '' : 'camera-status-hidden', 'badge--success']"><i
 						class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct
 					</div>
-					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--warn']"><i class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Your face is off the camera
+					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
 					</div>
 
 				</div>
@@ -22,7 +22,6 @@
 
 			</div>
 		</div>
-
 		<br>
 		<div>
 			<Webcam style="visibility:hidden; position:absolute"/>
@@ -47,31 +46,29 @@
 
 		mounted() {
 
+			var self = this;
+
 			this.$store.commit(TestStoreOps.TEST_STARTED);
 			axios.get("/questions")
 				.then(response => {
 					// TODO - should be actions
 					this.$store.commit(TestStoreOps.LOAD_QUESTIONS, response.data.questions);
+
+					$("#camera-status").stick_in_parent();
+
+					this.$on('webcamEvent', function (value) {
+						this.$store.commit(TestStoreOps.LOAD_WEBCAM_EVENT, value);
+						//console.log(value);
+						if (value.type === "OK") {
+							self.isInCamera = true;
+						} else if (value.type === 'NOFACE') {
+							self.isInCamera = false;
+						}
 				})
 				.catch(e => {
+				    console.error('Error', e);
 				});
-
-			var self = this;
-
-			this.$on('webcamEvent', function (value) {
-				this.$store.commit(TestStoreOps.LOAD_WEBCAM_EVENT, value);
-			//console.log(value);
-				if (value.type === "OK") {
-					self.isInCamera = true;
-				} else if (value.type === 'NOFACE') {
-					self.isInCamera = false;
-				}
-
 			});
-			setTimeout(function () {
-				$("#camera-status").stick_in_parent();
-			}, 1000);
-
 		},
 		data: function () {
 			return {
@@ -111,7 +108,11 @@
 	}
 
 	.blink {
-		animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+		animation: blinker 3s cubic-bezier(.5, 0, 1, 1.5) infinite alternate;
+	}
+
+	.fast-blink {
+		animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
 	}
 
 	@keyframes blinker {

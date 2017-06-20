@@ -1912,7 +1912,7 @@ code {
 	top: -3px
 }
 #global-header .header-proposition {
-	padding-top: 0
+	padding-top: 6px;
 }
 @media (min-width: 641px) {
 	#global-header .header-proposition {
