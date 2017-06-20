@@ -36,6 +36,10 @@
 				})
 				.catch(e => {
 				});
+
+			this.$on('potentialFraudFound', function(value){
+    			console.log(value);
+			});
 		},
 		data: function () {
 			return {

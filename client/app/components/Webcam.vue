@@ -41,6 +41,11 @@
 						self.multipleFacesFound = false;
 
 						noticeTimer.innerHTML = `TIME REMAINING ${Math.round(((FACE_DETECTION_TIMEOUT_MS + WARNING_THRESHOLD_MS - (new Date().getTime() - self.lastTimeSeen)) / 1000))}S`;
+
+						if (FACE_DETECTION_TIMEOUT_MS + WARNING_THRESHOLD_MS - (new Date().getTime() - self.lastTimeSeen) <= 0) {
+							self.$parent.$emit('potentialFraudFound', 'potentialFraudFound');
+							self.lastTimeSeen = new Date().getTime();
+						}						
 					}
 			  } else {
 					self.faceFound = true;
