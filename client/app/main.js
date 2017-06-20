@@ -4,13 +4,14 @@ require("es6-promise/auto");
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Vuex from 'vuex';
+import Vuex from "vuex";
 
 import App from "./core/App.vue";
 
 import Home from "./modules/home";
 import Test from "./modules/test";
 import Intro from "./modules/test/intro.vue";
+import Calibration from "./modules/test/calibration.vue";
 
 import Result from "./modules/result";
 import Admin from "./modules/admin";
@@ -25,9 +26,10 @@ let router = new VueRouter({
 	routes: [
 		{path: "/", component: Home},
 		{path: "/intro", component: Intro},
+		{path: "/calibration", component: Calibration},
 		{path: "/test", component: Test},
 		{path: "/result", component: Result},
-		{path: "/admin", component: Admin	}
+		{path: "/admin", component: Admin}
 	]
 });
 

@@ -19,7 +19,8 @@
 		</div>
 
 		<p>
-			<router-link to="/test"><a class="button" href="#" role="button">Continue</a></router-link>
+			<router-link to="/calibration"><a class="button" href="#" role="button">Continue</a></router-link>
+			<router-link to="/test"><a class="button" href="#" role="button">[DEV] Skip calibration</a></router-link>
 		</p>
 	</div>
 

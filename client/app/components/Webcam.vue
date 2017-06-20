@@ -2,7 +2,7 @@
 	<div>
 
 		<video id="userWebcam" width="320" height="200" preload autoplay loop muted></video>
-		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas"></canvas>
+		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas" style="visibility:hidden;"></canvas>
 	</div>
 </template>
 <script>
