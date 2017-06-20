@@ -3,6 +3,7 @@
 
 		<video id="userWebcam" width="320" height="200" preload autoplay loop muted></video>
 		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas"></canvas>
+		<img id="userStillImage" width="320" height="200"></img>
 	</div>
 </template>
 <script>
@@ -13,43 +14,80 @@
 
 
 	const FACE_DETECTION_TIMEOUT_MS = 1000;
-	const FRAME_INTERVAL_MS = 500;
+	const FRAME_INTERVAL_MS = 300;
 
 	export default {
 
 		mounted() {
 			let self = this;
+			self.initializeCamera(self);
 			self.initializeTracker(self);
-			setInterval(self.analizeFrame, FRAME_INTERVAL_MS);
 		},
 		props: ["supcio"],
 		data() {
 			return {
 				now: null,
 				lastTimeSeen: new Date().getTime(),
-				tracker: null
+				tracker: null,
+				video: null
 			};
 		},
 		methods: {
+			initializeCamera: function (self) {
+				self.video = document.getElementById('userWebcam');
+
+				navigator.getMedia = ( navigator.getUserMedia ||
+															navigator.webkitGetUserMedia ||
+															navigator.mozGetUserMedia ||
+															navigator.msGetUserMedia);
+
+				navigator.getMedia(
+					{
+						video: true,
+						audio: false
+					},
+					function(stream) {
+						if (navigator.mozGetUserMedia) {
+							self.video.mozSrcObject = stream;
+						} else {
+							var vendorURL = window.URL || window.webkitURL;
+							self.video.src = vendorURL.createObjectURL(stream);
+						}
+						self.video.play();
+					},
+					function(err) {
+						console.log("An error occured! " + err);
+					});
+			},
 			initializeTracker: function(self) {
 				self.tracker = new tracking.ObjectTracker("face");
 				self.tracker.setInitialScale(2);
 				self.tracker.setStepSize(1);
 				self.tracker.setEdgesDensity(0.1);
 
-				tracking.track("#userWebcam", self.tracker, {camera: true});
+				self.attachOnFrameEventListener();
+				setInterval(self.takePhoto, FRAME_INTERVAL_MS);
 			},
 
-			analizeFrame: function() {
+			takePhoto: function() {
 				let self = this;
-				var canvas = document.getElementById("userCanvasId");
-				var context = canvas ? canvas.getContext("2d") : null;
+				let canvas = document.getElementById("userCanvasId");
+				let context = canvas ? canvas.getContext("2d") : null;
+				let img = document.getElementById("userStillImage");
 
-				if (context) {
-					context.clearRect(0, 0, canvas.width, canvas.height);
+				if (context && img) {
+					context.drawImage(self.video, 0, 0, 320,200);
+					let data = canvas.toDataURL('image/png');
+					img.setAttribute('src', data);
 				}
 
-				self.tracker.once('track', function(event) {
+				tracking.track("#userCanvasId", self.tracker);
+			},
+
+			attachOnFrameEventListener: function() {
+				let self = this;
+
+				self.tracker.on('track', function(event) {
 					var webcamEvent = {};
 					webcamEvent.eventTime = new Date().toLocaleString();
 					if (event.data.length === 0 || event.data.length > 1) {
@@ -107,6 +145,6 @@
 
 	canvas {
 		position: relative;
-		left: -400px;
+		//left: -400px;
 	}
 </style>
