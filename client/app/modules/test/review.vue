@@ -43,9 +43,8 @@
 			showQuestions: function () {
 				this.$emit('action', 'question');
 			},
-			endTest : function () {
-				this.$store.commit(TestStoreOps.TEST_ENDED);
-				this.$router.push('/result')
+			endTest: function () {
+				this.$emit('action', 'endtest');
 			}
 		}
 	};

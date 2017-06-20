@@ -12,6 +12,10 @@
 			this.now = this.timespan;
 			window.setInterval(() => {
 				this.now = (this.now !== 0) ? this.now - 1 : this.now;
+
+				if (this.now === 0) {
+					this.$emit("action", "timeout");
+				}
 			}, 1000);
 		},
 		props: ["timespan"],

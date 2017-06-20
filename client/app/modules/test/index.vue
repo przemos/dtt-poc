@@ -7,7 +7,8 @@
 					<div v-bind:class="[isInCamera ? '' : 'camera-status-hidden', 'badge--success']"><i
 						class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct
 					</div>
-					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
+					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i
+						class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
 					</div>
 
 				</div>
@@ -17,7 +18,7 @@
 				</div>
 
 				<div class="column-one-third">
-					<Countdown timespan="300" style=""></Countdown>
+					<Countdown timespan="300" v-on:action="changeView($event)"></Countdown>
 				</div>
 
 			</div>
@@ -66,7 +67,7 @@
 					});
 				})
 				.catch(e => {
-				    console.error('Error', e);
+					console.error('Error', e);
 				});
 		},
 		data: function () {
@@ -84,8 +85,11 @@
 
 				if (target === "review") {
 					this.mode = "review";
-				} else {
+				} else if (target === "question") {
 					this.mode = "question";
+				} else if (target === "timeout" || target === "endtest") {
+					this.$store.commit(TestStoreOps.TEST_ENDED);
+					this.$router.push('/result');
 				}
 			}
 		}
