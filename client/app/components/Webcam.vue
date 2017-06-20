@@ -7,16 +7,18 @@
 </template>
 <script>
 	const FACE_DETECTION_TIMEOUT_MS = 1000;
-	const FRAME_INTERVAL_MS = 333;
+	const FRAME_INTERVAL_MS = 200;
 
 	export default {
 
 		mounted() {
 			let self = this;
+			self.myWorker = new Worker("/javascripts/tracking.js");
+
 			self.initializeCamera(self);
 			self.initializeTracker(self);
+
 		},
-		props: ["supcio"],
 		data() {
 			return {
 				now: null,
@@ -30,16 +32,16 @@
 				self.video = document.getElementById('userWebcam');
 
 				navigator.getMedia = ( navigator.getUserMedia ||
-															navigator.webkitGetUserMedia ||
-															navigator.mozGetUserMedia ||
-															navigator.msGetUserMedia);
+				navigator.webkitGetUserMedia ||
+				navigator.mozGetUserMedia ||
+				navigator.msGetUserMedia);
 
 				navigator.getMedia(
 					{
 						video: true,
 						audio: false
 					},
-					function(stream) {
+					function (stream) {
 						if (navigator.mozGetUserMedia) {
 							self.video.mozSrcObject = stream;
 						} else {
@@ -48,21 +50,18 @@
 						}
 						self.video.play();
 					},
-					function(err) {
+					function (err) {
 						console.log("An error occured! " + err);
 					});
 			},
-			initializeTracker: function(self) {
-				self.tracker = new tracking.ObjectTracker("face");
-				self.tracker.setInitialScale(2);
-				self.tracker.setStepSize(1);
-				self.tracker.setEdgesDensity(0.1);
+			initializeTracker: function (self) {
+
 
 				self.attachOnFrameEventListener();
 				setInterval(self.takePhoto, FRAME_INTERVAL_MS);
 			},
 
-			takePhoto: function() {
+			takePhoto: function () {
 				let self = this;
 				let canvas = document.getElementById("userCanvasId");
 				if (canvas) {
@@ -73,14 +72,17 @@
 
 				if (context) {
 					context.drawImage(self.video, 0, 0, self.video.width, self.video.height);
-					self.tracker.track(context.getImageData(0,0,self.video.width,self.video.height).data, self.video.width, self.video.height);
+					let data = context.getImageData(0, 0, self.video.width, self.video.height).data;
+					self.myWorker.postMessage({data: data, width: self.video.width, height: self.video.height});
 				}
 			},
 
-			attachOnFrameEventListener: function() {
+			attachOnFrameEventListener: function () {
 				let self = this;
 
-				self.tracker.on('track', function(event) {
+				self.myWorker.onmessage = function (workerMsg) {
+
+					var event = workerMsg.data;
 					var webcamEvent = {};
 					webcamEvent.eventTime = new Date().toLocaleString();
 					if (event.data.length === 0 || event.data.length > 1) {
@@ -91,7 +93,7 @@
 
 							if (event.data.length === 0) {
 								webcamEvent.type = 'NOFACE';
-							} else	{
+							} else {
 								webcamEvent.type = 'MULTIFACE';
 							}
 							self.$parent.$emit('webcamEvent', webcamEvent);
@@ -106,8 +108,8 @@
 
 						self.$parent.$emit('webcamEvent', webcamEvent);
 					}
-				});
-			},
+				};
+			}
 		},
 		computed: {
 			seconds() {
