@@ -59,7 +59,8 @@
 			var self = this;
 
 			this.$on('webcamEvent', function (value) {
-			console.log(value);
+				this.$store.commit(TestStoreOps.LOAD_WEBCAM_EVENT, value);
+			//console.log(value);
 				if (value.type === "OK") {
 					self.isInCamera = true;
 				} else if (value.type === 'NOFACE') {
