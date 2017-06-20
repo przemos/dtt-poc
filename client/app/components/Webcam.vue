@@ -10,7 +10,7 @@
 	import {face} from "tracking/build/data/face";
 
 	const WARNING_THRESHOLD_MS = 1500;
-	const FACE_DETECTION_TIMEOUT_MS = 2500;
+	const FACE_DETECTION_TIMEOUT_MS = 1000;
 
 	export default {
 
@@ -20,8 +20,8 @@
 			var context = canvas.getContext("2d");
 
 			var tracker = new tracking.ObjectTracker("face");
-			tracker.setInitialScale(4);
-      tracker.setStepSize(2);
+			tracker.setInitialScale(2);
+      tracker.setStepSize(1);
       tracker.setEdgesDensity(0.1);
 
 			tracking.track("#userWebcam", tracker, {camera: true});
@@ -36,11 +36,11 @@
 						if (FACE_DETECTION_TIMEOUT_MS + WARNING_THRESHOLD_MS - (new Date().getTime() - self.lastTimeSeen) <= 0) {
 							var potentialFraudData = {};
 							potentialFraudData.numberOfFacesFound = event.data.length;
-							potentialFraudData.eventTime = new Date().toLocaleString(); 
+							potentialFraudData.eventTime = new Date().toLocaleString();
 
 							self.$parent.$emit('potentialFraudFound', potentialFraudData);
 							self.lastTimeSeen = new Date().getTime();
-						}						
+						}
 					}
 			  }
 				else {
