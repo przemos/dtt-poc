@@ -3,12 +3,11 @@
 
 		<video id="userWebcam" width="320" height="200" preload autoplay loop muted></video>
 		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas"></canvas>
-		<img id="userStillImage" width="320" height="200"></img>
 	</div>
 </template>
 <script>
 	const FACE_DETECTION_TIMEOUT_MS = 1000;
-	const FRAME_INTERVAL_MS = 300;
+	const FRAME_INTERVAL_MS = 333;
 
 	export default {
 
@@ -66,16 +65,16 @@
 			takePhoto: function() {
 				let self = this;
 				let canvas = document.getElementById("userCanvasId");
-				let context = canvas ? canvas.getContext("2d") : null;
-				let img = document.getElementById("userStillImage");
-
-				if (context && img) {
-					context.drawImage(self.video, 0, 0, 320,200);
-					let data = canvas.toDataURL('image/png');
-					img.setAttribute('src', data);
+				if (canvas) {
+					canvas.width = self.video.width;
+					canvas.height = self.video.height;
 				}
+				let context = canvas ? canvas.getContext("2d") : null;
 
-				tracking.track("#userCanvasId", self.tracker);
+				if (context) {
+					context.drawImage(self.video, 0, 0, self.video.width, self.video.height);
+					self.tracker.track(context.getImageData(0,0,self.video.width,self.video.height).data, self.video.width, self.video.height);
+				}
 			},
 
 			attachOnFrameEventListener: function() {
