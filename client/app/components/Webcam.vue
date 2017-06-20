@@ -1,14 +1,15 @@
 <template>
 	<div>
-
 		<video id="userWebcam" width="400" height="300" preload autoplay loop muted></video>
 		<canvas id="userCanvasId" width="400" height="300" ref="userCanvas"></canvas>
-		<h1 class="face-detection-warning" v-if="!faceFound">NO FACE DETECTED</h1>
+		<h1 class="face-detection-warning animated shake" v-if="!faceFound">NO FACE DETECTED</h1>
 		<h1 class="face-detection-warning" v-if="multipleFacesFound">FOUND MULTIPLE FACES</h1>
 		<h1 id="noticeTimer"></h1>
 	</div>
 </template>
 <script>
+ import {css} from "animate.css/animate.css";
+
 	import * as tracking from 'exports-loader?tracking!tracking';
 	import {face} from "tracking/build/data/face";
 
