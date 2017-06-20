@@ -10,6 +10,8 @@ import App from "./core/App.vue";
 
 import Home from "./modules/home";
 import Test from "./modules/test";
+import Intro from "./modules/test/intro.vue";
+
 import Result from "./modules/result";
 import Admin from "./modules/admin";
 import store from "./modules/teststore";
@@ -22,6 +24,7 @@ let router = new VueRouter({
 	mode: "history",
 	routes: [
 		{path: "/", component: Home},
+		{path: "/intro", component: Intro},
 		{path: "/test", component: Test},
 		{path: "/result", component: Result},
 		{path: "/admin", component: Admin	}

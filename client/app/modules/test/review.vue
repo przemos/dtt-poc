@@ -19,8 +19,8 @@
 			</tbody>
 		</table>
 		<div style="margin-top:20px">
-			<input class="button" type="button" value="Review All" v-on:click="showQuestions()">
-			<input class="button" type="button" value="End" v-on:click="endTest()">
+			<input class="button" type="button" value="Back" v-on:click="showQuestions()">
+			<input class="button button-right" type="button" value="End" v-on:click="endTest()">
 		</div>
 
 	</div>

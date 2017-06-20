@@ -3,6 +3,7 @@ import getters from "./getters";
 
 const state = {
 	currentIndex: 0,
+	correctAnswer : null,
 	questions: [],
 	timeStarted: null,
 	timeEnded: null
