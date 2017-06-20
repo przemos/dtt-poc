@@ -11,59 +11,77 @@
 
 	const WARNING_THRESHOLD_MS = 1500;
 	const FACE_DETECTION_TIMEOUT_MS = 2500;
+	const FRAME_INTERVAL_MS = 250;
 
 	export default {
 
 		mounted() {
-			var self = this;
-			var canvas = self.$refs["userCanvas"];
-			var context = canvas.getContext("2d");
-
-			var tracker = new tracking.ObjectTracker("face");
-			tracker.setInitialScale(4);
-      tracker.setStepSize(2);
-      tracker.setEdgesDensity(0.1);
-
-			tracking.track("#userWebcam", tracker, {camera: true});
-
-			tracker.on('track', function(event) {
-				context.clearRect(0, 0, canvas.width, canvas.height);
-				if (event.data.length === 0 || event.data.length > 1) {
-			    // No objects were detected in this frame.
-
-					if (self.lastTimeSeen + WARNING_THRESHOLD_MS < new Date().getTime()) {
-
-						if (FACE_DETECTION_TIMEOUT_MS + WARNING_THRESHOLD_MS - (new Date().getTime() - self.lastTimeSeen) <= 0) {
-							var potentialFraudData = {};
-							potentialFraudData.numberOfFacesFound = event.data.length;
-							potentialFraudData.eventTime = new Date().toLocaleString(); 
-
-							self.$parent.$emit('potentialFraudFound', potentialFraudData);
-							self.lastTimeSeen = new Date().getTime();
-						}						
-					}
-			  }
-				else {
-					self.lastTimeSeen = new Date().getTime();
-
-			    /*event.data.forEach(function(rect) {
-			      // rect.x, rect.y, rect.height, rect.width
-						context.strokeStyle = '#a64ceb';
-	          context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-	          context.font = '11px Helvetica';
-	          context.fillStyle = "#fff";
-	          context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
-	          context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-		    	});*/
-			  }
-			});
+			let self = this;
+			self.initializeTracker(self);
+			setInterval(self.analizeFrame, FRAME_INTERVAL_MS);
 		},
 		props: ["supcio"],
 		data() {
 			return {
 				now: null,
-				lastTimeSeen: new Date().getTime()
+				lastTimeSeen: new Date().getTime(),
+				tracker: null
 			};
+		},
+		methods: {
+			initializeTracker: function(self) {
+				self.tracker = new tracking.ObjectTracker("face");
+				self.tracker.setInitialScale(4);
+				self.tracker.setStepSize(2);
+				self.tracker.setEdgesDensity(0.1);
+
+				tracking.track("#userWebcam", self.tracker, {camera: true});
+			},
+
+			analizeFrame: function() {
+				let self = this;
+				var canvas = document.getElementById("userCanvasId");
+				var context = canvas ? canvas.getContext("2d") : null;
+
+				if (context) {
+					context.clearRect(0, 0, canvas.width, canvas.height);
+				}
+
+				self.tracker.once('track', function(event) {
+					if (event.data.length === 0 || event.data.length > 1) {
+						// No objects were detected in this frame.
+
+						if (self.lastTimeSeen + WARNING_THRESHOLD_MS < new Date().getTime()) {
+
+							if (FACE_DETECTION_TIMEOUT_MS + WARNING_THRESHOLD_MS - (new Date().getTime() - self.lastTimeSeen) <= 0) {
+								var potentialFraudData = {};
+								potentialFraudData.numberOfFacesFound = event.data.length;
+								potentialFraudData.eventTime = new Date().toLocaleString(); 
+
+								self.$parent.$emit('potentialFraudFound', potentialFraudData);
+								self.lastTimeSeen = new Date().getTime();
+							}						
+						}
+					}
+					else {
+						self.lastTimeSeen = new Date().getTime();
+
+						if (!context) {
+							return;
+						}
+						
+						event.data.forEach(function(rect) {
+							// rect.x, rect.y, rect.height, rect.width
+							context.strokeStyle = '#a64ceb';
+							context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+							context.font = '11px Helvetica';
+							context.fillStyle = "#fff";
+							context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
+							context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+						});
+					}
+				});
+			},
 		},
 		computed: {
 			seconds() {
