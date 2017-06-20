@@ -6,9 +6,9 @@ const state = {
 	correctAnswer : null,
 	questions: [],
 	timeStarted: null,
-	timeEnded: null
-}
-;
+	timeEnded: null,
+	webcamEvents: []
+};
 
 const mutations = {
 
@@ -31,6 +31,7 @@ const mutations = {
 	[TestStoreOps.TEST_STARTED] (state) {
 		state.timeStarted = new Date();
 	},
+
 	[TestStoreOps.TEST_ENDED] (state) {
 		state.timeEnded = new Date();
 	},
@@ -43,7 +44,11 @@ const mutations = {
 			q.answer = null;
 			state.questions.push(q);
 		});
-	}
+	},
+
+	[TestStoreOps.LOAD_WEBCAM_EVENT] (state, webcamEvent) {
+		state.webcamEvents.push(webcamEvent);
+	},
 };
 
 

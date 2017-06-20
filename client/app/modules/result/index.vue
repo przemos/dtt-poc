@@ -50,8 +50,8 @@
 		</div>
 		<h2 class="heading-medium">Fraud markers detected:</h2>
 		<ol class="list-number">
-			<li>More than one face detected in the camera viewport</li>
-			<li>Face kept off camera viewport</li>
+			<li>More than one face detected in the camera viewport count: <span class="data-item bold-xxlarge">{{numberOfTimesMoreThanOneFaceAppeared}}</span></li>
+			<li>Face kept off camera viewport count: <span class="data-item bold-xxlarge">{{numberOfTimesFaceWasKeptOffCamera}}</span></li>				
 		</ol>
 	</div>
 
@@ -64,6 +64,7 @@
 	export default {
 
 		mounted() {
+
 		},
 
 		data() {
@@ -103,6 +104,15 @@
 			},
 			outcomeText: function () {
 				return this.$store.getters.correctlyAnsweredCount === 3 ? "Passed" : "Failed";
+			},
+			webcamEventsNumber: function () {
+				return this.$store.getters.webcamEvents.length;
+			},
+			numberOfTimesFaceWasKeptOffCamera: function () {
+				return this.$store.getters.numberOfTimesFaceWasKeptOffCamera;
+			},
+			numberOfTimesMoreThanOneFaceAppeared: function () {
+				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared;
 			},
 		},
 	};

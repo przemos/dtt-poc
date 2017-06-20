@@ -30,6 +30,11 @@ export default {
 			minutes : Math.trunc(duration / 60) % 60,
 			seconds:  Math.trunc(duration % 60)
 		};
-	}
+	},
 
+	webcamEvents: state => state.webcamEvents,
+
+	numberOfTimesFaceWasKeptOffCamera: state => state.webcamEvents.filter(q => q.type == 'NOFACE').length,
+
+	numberOfTimesMoreThanOneFaceAppeared: state => state.webcamEvents.filter(q => q.type == 'MULTIFACE').length
 };
