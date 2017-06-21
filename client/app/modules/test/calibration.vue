@@ -1,28 +1,34 @@
 <template>
 	<div>
 		<h2 class="heading-large">Camera calibration</h2>
-		<p>
-			Please keep your face in center of camera until the calibration process finished.
-		</p>
+		<div class="topbar" id="camera-status">
+			<div class="grid-row">
+
+				<div class="column-one-third">
+					<div v-bind:class="[isInCamera ? '' : 'camera-status-hidden', 'badge--success']"><i
+						class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct
+					</div>
+					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i
+						class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
+					</div>
+
+				</div>
+			</div>
+		</div>
 		<div class="message--important" >
-			<p>You won't be able to process with test until you finish calibration successfuly.</p>
+			<p>Please adjust yourself in front of your camera and click "Continue".</p>
 		</div>
 		<div >
 			<Webcam />
 		</div>
 
 		<div style="padding-top:15px;width:320px">
-			<div class="progress">
-				<div class="progress-bar progress-bar-striped active" style="width: 0%;" id="calibrationProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-				</div>
-			</div>
+			<p>
+				<button class="button" role="button" v-on:click="goToTest">Continue</button>
+			</p>
 		</div>
 
-		<p>
-			<button class="button" role="button" v-bind:disabled="!calibrationDone" v-on:click="goToTest">Continue</button>
-		</p>
 	</div>
-
 </template>
 
 <script>
@@ -36,9 +42,9 @@
 			var calibrationProgressBar = $("#calibrationProgressBar");
 
 			this.$on('webcamEvent', function (value) {
-				console.log(value);
+				//console.log(value);
 
-				if(!self.calibrationDone) {
+				/*if(!self.calibrationDone) {
 					if (value.type === "OK") {
 						self.currentProgress += 10;
 						calibrationProgressBar.css("width", self.currentProgress+"%");
@@ -52,6 +58,12 @@
 						self.calibrationDone = true;
 						calibrationProgressBar.removeClass("active");
 					}
+				}*/
+
+				if (value.type === "OK") {
+					self.isInCamera = true;
+				} else if (value.type === 'NOFACE') {
+					self.isInCamera = false;
 				}
 
 			});
@@ -78,4 +90,31 @@
 </script>
 <style>
 
+	.camera-status-hidden {
+		display: none;
+	}
+
+	.topbar {
+		display: block;
+		padding-top: 10px;
+		z-index: 999;
+		background-color: white;
+	}
+
+	.blink {
+		animation: blinker 3s cubic-bezier(.5, 0, 1, 1.5) infinite alternate;
+	}
+
+	.fast-blink {
+		animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+	}
+
+	@keyframes blinker {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
 </style>
