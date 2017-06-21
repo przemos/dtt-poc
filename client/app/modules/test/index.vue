@@ -30,6 +30,7 @@
 			<div class="column-two-thirds">
 				<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
 				<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
+				<p v-if="isMoreThanOneFaceAppeared()" style="float:right">o</p>
 			</div>
 		</div>
 	</div>
@@ -86,6 +87,9 @@
 
 			isCamera: function () {
 				return this.mode === "question";
+			},
+			isMoreThanOneFaceAppeared: function () {
+				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared > 1;
 			},
 			changeView: function (target) {
 
