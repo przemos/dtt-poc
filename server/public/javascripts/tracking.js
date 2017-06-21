@@ -2470,3 +2470,4 @@ onmessage = function(event) {
 	tracker.track(event.data.data, event.data.width, event.data.height)
 };
 
+console.log('Tracking worker initialized.')

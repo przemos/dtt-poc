@@ -13,13 +13,10 @@ module.exports = {
 			"vue",
 			"vue-router",
 			"vuex",
-			"lodash",
 			"moment",
 			"jquery",
 			"axios",
-			"toastr",
-			"vue-form-generator"
-		],		
+		],
 		frontend: ["./client/frontend/main.js"],
 		tracking: [
 			"tracking",

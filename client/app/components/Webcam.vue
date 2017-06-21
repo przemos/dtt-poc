@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<video id="userWebcam" width="320" height="200" preload autoplay loop muted></video>
-		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas" style="visibility:hidden;position:absolute"></canvas>
+		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas"
+										style="visibility:hidden;position:absolute"></canvas>
 	</div>
 </template>
 <script>
@@ -12,11 +13,8 @@
 
 		mounted() {
 			let self = this;
-			self.myWorker = new Worker("/javascripts/tracking.js");
-
 			self.initializeCamera(self);
 			self.initializeTracker(self);
-
 		},
 		data() {
 			return {
@@ -44,7 +42,7 @@
 						if (navigator.mozGetUserMedia) {
 							self.video.mozSrcObject = stream;
 						} else {
-							var vendorURL = window.URL || window.webkitURL;
+							let vendorURL = window.URL || window.webkitURL;
 							self.video.src = vendorURL.createObjectURL(stream);
 						}
 						self.video.play();
@@ -54,8 +52,8 @@
 					});
 			},
 			initializeTracker: function (self) {
-
-
+			 console.log("Initialize worker");
+				self.trackingWorker = new Worker("/javascripts/tracking.js");
 				self.attachOnFrameEventListener();
 				setInterval(self.takePhoto, FRAME_INTERVAL_MS);
 			},
@@ -72,17 +70,17 @@
 				if (context) {
 					context.drawImage(self.video, 0, 0, self.video.width, self.video.height);
 					let data = context.getImageData(0, 0, self.video.width, self.video.height).data;
-					self.myWorker.postMessage({data: data, width: self.video.width, height: self.video.height});
+					self.trackingWorker.postMessage({data: data, width: self.video.width, height: self.video.height});
 				}
 			},
 
 			attachOnFrameEventListener: function () {
 				let self = this;
 
-				self.myWorker.onmessage = function (workerMsg) {
+				self.trackingWorker.onmessage = function (workerMsg) {
 
-					var event = workerMsg.data;
-					var webcamEvent = {};
+					let event = workerMsg.data;
+					let webcamEvent = {};
 					webcamEvent.eventTime = new Date().toLocaleString();
 					if (event.data.length === 0 || event.data.length > 1) {
 						// No objects were detected in this frame.
@@ -91,24 +89,27 @@
 							webcamEvent.numberOfFacesFound = event.data.length;
 
 							if (event.data.length === 0) {
-								webcamEvent.type = 'NOFACE';
+								webcamEvent.type = "NOFACE";
 							} else {
-								webcamEvent.type = 'MULTIFACE';
+								webcamEvent.type = "MULTIFACE";
 							}
-							self.$parent.$emit('webcamEvent', webcamEvent);
+							self.$parent.$emit("webcamEvent", webcamEvent);
 							self.lastTimeSeen = new Date().getTime();
 						}
 					}
 					else {
 						self.lastTimeSeen = new Date().getTime();
-
-						self.lastTimeSeen = new Date().getTime();
 						webcamEvent.type = "OK";
-
-						self.$parent.$emit('webcamEvent', webcamEvent);
+						self.$parent.$emit("webcamEvent", webcamEvent);
 					}
 				};
 			}
+		},
+		destroyed() {
+			console.log("Webcam destroyed");
+			this.trackingWorker.terminate();
+			console.log("Tracking worker terminated");
+
 		},
 		computed: {
 			seconds() {
@@ -117,24 +118,3 @@
 		}
 	};
 </script>
-
-<style lang="scss">
-	.main-content {
-		padding: 16px;
-	}
-
-	.face-detection-warning {
-		color: red;
-		font-size: 50px;
-	}
-
-	#noticeTimer {
-		color: red;
-		font-size: 50px;
-	}
-
-	canvas {
-		position: relative;
-		//left: -400px;
-	}
-</style>
