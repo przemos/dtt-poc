@@ -20,16 +20,17 @@
 				<div class="column-one-third">
 					<Countdown timespan="300" v-on:action="changeView($event)"></Countdown>
 				</div>
-
 			</div>
 		</div>
-		<br>
-		<div>
-			<Webcam style="visibility:hidden; position:absolute"/>
+		<div class="grid-row">
+			<div class="column-one-third aaa" style="min-width:300px; padding-right:10px">
+				<Webcam style="margin-top:40px" />
+			</div>
+			<div class="column-two-thirds">
+			<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
+			<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
+			</div>
 		</div>
-
-		<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
-		<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
 	</div>
 </template>
 <script>
@@ -112,6 +113,22 @@
 
 	.blink {
 		animation: blinker 3s cubic-bezier(.5, 0, 1, 1.5) infinite alternate;
+	}
+
+
+	.aaa {
+		visibility:hidden;
+		position:absolute;
+
+	}
+
+	@media (min-width: 600px)  {
+		.aaa {
+			visibility: visible;
+			display:block;
+			position:relative;
+
+		}
 	}
 
 	.fast-blink {

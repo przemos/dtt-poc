@@ -24,7 +24,7 @@ Vue.use(VueRouter);
 let router = new VueRouter({
 	mode: "history",
 	routes: [
-		{path: "/", component: Home},
+		{path: "/", component: Intro},
 		{path: "/intro", component: Intro},
 		{path: "/calibration", component: Calibration},
 		{path: "/test", component: Test},

@@ -32,7 +32,6 @@
 </template>
 
 <script>
-	import "!style-loader!css-loader!../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 	import Webcam from "../../components/Webcam.vue";
 
 	export default {
@@ -46,19 +45,19 @@
 
 				/*if(!self.calibrationDone) {
 					if (value.type === "OK") {
-						self.currentProgress += 10;
-						calibrationProgressBar.css("width", self.currentProgress+"%");
+					self.currentProgress += 10;
+					calibrationProgressBar.css("width", self.currentProgress+"%");
 
 					} else if (value.type === 'NOFACE') {
-						self.currentProgress = 0;
-						calibrationProgressBar.css("width", self.currentProgress+"%");
+					self.currentProgress = 0;
+					calibrationProgressBar.css("width", self.currentProgress+"%");
 					}
 
 					if(self.currentProgress >= 100) {
-						self.calibrationDone = true;
-						calibrationProgressBar.removeClass("active");
+					self.calibrationDone = true;
+					calibrationProgressBar.removeClass("active");
 					}
-				}*/
+					}*/
 
 				if (value.type === "OK") {
 					self.isInCamera = true;

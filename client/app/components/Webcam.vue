@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<video id="userWebcam" width="320" height="200" preload autoplay loop muted></video>
-		<canvas id="userCanvasId" width="320" height="200" ref="userCanvas"
-										style="visibility:hidden;position:absolute"></canvas>
+		<video id="userWebcam" width="300" height="255" preload autoplay loop muted></video>
 	</div>
 </template>
 <script>
@@ -60,14 +58,14 @@
 
 			takePhoto: function () {
 				let self = this;
-				let canvas = document.getElementById("userCanvasId");
+				let canvas = document.createElement("canvas");
 				if (canvas) {
 					canvas.width = self.video.width;
 					canvas.height = self.video.height;
 				}
 				let context = canvas ? canvas.getContext("2d") : null;
 
-				if (context) {
+				if (context && self.video.src) {
 					context.drawImage(self.video, 0, 0, self.video.width, self.video.height);
 					let data = context.getImageData(0, 0, self.video.width, self.video.height).data;
 					self.trackingWorker.postMessage({data: data, width: self.video.width, height: self.video.height});

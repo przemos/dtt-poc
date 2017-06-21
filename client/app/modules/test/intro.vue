@@ -1,26 +1,21 @@
 <template>
 	<div>
-		<h2 class="heading-large">Test preparation</h2>
-		<p>
-			To ensure the test session is qualified as valid, please ensure the following:
-		</p>
-		<ul class="list-bullet">
-			<li>your laptop or external camera is correctly installed and switched on</li>
-			<li>your face remains in front of the camera within specified window</li>
-			<li>avoid changing your head position throughout a test</li>
-			<li>when your head position is correct during the test, you will be noticed with <div class="badge--warn"><i class="fa fa-video-camera"></i>&nbsp;Your face is off the camera</div>
-			</li>
-			<li>when your head position is correct you will see <div class="badge--success"><i class="fa fa-video-camera"></i>&nbsp;&nbsp;Head position correct</div>
-			</li>
-		</ul>
-
-		<div class="message--important">
-			<p>Avoiding suggestions as to your head position may result in failing your test.</p>
+		<h2 class="heading-large">Take your theory test</h2>
+		<div class="text">
+			In this test you will be asked 3 questions. You will have 5 minutes to answer.
+			You will see the result of the test at the end.
 		</div>
+
+		<div class="message">
+			<p>To attend, make sure that your camera is switched on</p>
+		</div>
+
+		<p>Before you start, you need to set up your camera.</p>
+
 
 		<p>
 			<router-link to="/calibration"><a class="button" href="#" role="button">Continue</a></router-link>
-			<router-link to="/test"><a class="button" href="#" role="button">[DEV] Skip calibration</a></router-link>
+			<!--<router-link to="/test"><a class="button" href="#" role="button">[DEV] Skip calibration</a></router-link>-->
 		</p>
 	</div>
 
