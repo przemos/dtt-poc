@@ -1,6 +1,25 @@
 <template>
 	<div>
-		<h2 class="heading-large">Camera calibration</h2>
+		<header class="content-header">
+			<h1>
+                            <span class="content-header__type">
+                               Theory test
+                            </span>
+
+				<span class="content-header__title">
+                                Set up your camera
+                            </span>
+
+			</h1>
+		</header>
+
+		<div class="message--important" >
+			<p class=".message__heading">Please make sure that</p>
+			<p>
+				You are sitting in front of the camera at all times. Moving around
+				or standing may risk in failing the test.</p>
+		</div>
+
 		<div class="topbar" id="camera-status">
 			<div class="grid-row">
 
@@ -15,18 +34,31 @@
 				</div>
 			</div>
 		</div>
-		<div class="message--important" >
-			<p>Please adjust yourself in front of your camera and click "Continue".</p>
-		</div>
+
 		<div >
 			<Webcam />
 		</div>
 
-		<div style="padding-top:15px;width:320px">
-			<p>
-				<button class="button" role="button" v-on:click="goToTest">Continue</button>
-			</p>
-		</div>
+		<h3 class="heading-small">How will I know my head position is correct?</h3>
+		<p>
+			Don’t cover your face with sun glasses, don’t wear hat.
+		</p>
+
+
+		<nav class="content-navigation">
+
+			<ul class="list-unstyled content-navigation__split u-clearfix">
+				<li class="content-navigation__split--left">
+					<button class="button" role="button" v-on:click="goToTest">Start theory test</button>
+				</li>
+			</ul>
+
+			<ul class="content-navigation__secondary">
+				<li>
+					<p><router-link to="/intro"><a href="#" >Back</a></router-link></p>
+				</li>
+			</ul>
+		</nav>
 
 	</div>
 </template>

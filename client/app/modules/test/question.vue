@@ -15,11 +15,14 @@
 				</fieldset>
 			</div>
 			<div class="navigation-buttons">
-				<input class="button" type="button" value="Previous" v-if="!prevDisabled()" v-on:click="prev()">
-				<input class="button" type="button" value="Review" style="background-color:dodgerblue" v-on:click="review()">
 
-				<input class="button button-right" type="button" :disabled="nextDisabled()"
-											v-on:click="next()" value="Next" v-if="!isLast">
+				<input class="button" type="button" :disabled="nextDisabled()"
+											v-on:click="next()" value="Continue" v-if="!isLast">
+				<input v-bind:class="[!isLast ? 'button-right' : '', 'button']" type="button" value="Review" v-if="isLast"  v-on:click="review()">
+
+				<p>			<a href="#" v-if="!prevDisabled()" v-on:click="prev()">Back</a></p>
+				<p>			<a href="#" v-if="prevDisabled()" v-on:click="cancel()">Cancel test</a></p>
+
 			</div>
 		</form>
 	</div>
@@ -81,6 +84,10 @@
 
 			changeSelection: function () {
 				this.$store.commit(TestStoreOps.ANSWER, this.answer);
+			},
+
+			cancel : function () {
+				this.$emit('action', 'cancel')
 			}
 		}
 	};

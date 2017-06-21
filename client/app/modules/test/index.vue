@@ -23,12 +23,13 @@
 			</div>
 		</div>
 		<div class="grid-row">
-			<div class="column-one-third aaa" style="min-width:300px; padding-right:10px">
-				<Webcam style="margin-top:40px" />
+			<div v-bind:class="[true ? 'camera-viewport' : '', 'column-one-third ']"
+								style="min-width:300px; padding-right:10px">
+				<Webcam style="margin-top:40px"/>
 			</div>
 			<div class="column-two-thirds">
-			<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
-			<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
+				<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
+				<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
 			</div>
 		</div>
 	</div>
@@ -82,6 +83,10 @@
 		},
 		components: {Countdown, "question": Question, "review": Review, Webcam},
 		methods: {
+
+			isCamera: function () {
+				return this.mode === "question";
+			},
 			changeView: function (target) {
 
 				if (target === "review") {
@@ -91,6 +96,8 @@
 				} else if (target === "timeout" || target === "endtest") {
 					this.$store.commit(TestStoreOps.TEST_ENDED);
 					this.$router.push('/result');
+				} else if ( target === "cancel") {
+					this.$router.push('/calibration');
 				}
 			}
 		}
@@ -115,18 +122,21 @@
 		animation: blinker 3s cubic-bezier(.5, 0, 1, 1.5) infinite alternate;
 	}
 
-
-	.aaa {
-		visibility:hidden;
-		position:absolute;
-
+	.camera-viewport {
+		visibility: hidden;
+		position: absolute;
 	}
 
-	@media (min-width: 600px)  {
-		.aaa {
+	.hide-camera-viewport {
+		visibility: hidden;
+		position: absolute;
+	}
+
+	@media (min-width: 600px) {
+		.camera-viewport {
 			visibility: visible;
-			display:block;
-			position:relative;
+			display: block;
+			position: relative;
 
 		}
 	}

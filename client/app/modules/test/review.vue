@@ -19,8 +19,9 @@
 			</tbody>
 		</table>
 		<div style="margin-top:20px">
-			<input class="button" type="button" value="Back" v-on:click="showQuestions()">
-			<input class="button button-right" type="button" value="End" v-on:click="endTest()">
+			<input class="button" type="button" value="Finish and see the results" v-on:click="endTest()">
+			<p>				<a href="#"  v-on:click="showQuestions()">Back</a></p>
+
 		</div>
 
 	</div>
