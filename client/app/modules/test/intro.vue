@@ -17,11 +17,20 @@
 			<router-link to="/calibration"><a class="button" href="#" role="button">Continue</a></router-link>
 			<!--<router-link to="/test"><a class="button" href="#" role="button">[DEV] Skip calibration</a></router-link>-->
 		</p>
+
+		AAA:
+		<button v-on:click="add()" value="Send"></button>
 	</div>
 
 </template>
 
 <script>
+	export default {
+
+	    mounted()  {
+					}
+	};
+
 
 </script>
 <style>

@@ -23,7 +23,7 @@ let methodOverride = require("method-override");
 let helmet = require("helmet");
 let crossdomain = require("helmet-crossdomain");
 let cookieSession = require("cookie-session");
-
+let SocketServer = require('ws').Server;
 let serverFolder = path.normalize(path.join(config.rootPath, "server"));
 
 /**
@@ -242,6 +242,8 @@ module.exports = function () {
 	initWebpack(app);
 	// Load routes
 	require("../routes")(app);
+
+
 
 	return app;
 };

@@ -41,7 +41,7 @@
 
 		<h3 class="heading-small">How will I know my head position is correct?</h3>
 		<p>
-			Don’t cover your face with sun glasses, don’t wear hat.
+			Don’t cover your face with sun glasses, don’t wear a hat.
 		</p>
 
 

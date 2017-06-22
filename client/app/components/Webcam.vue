@@ -11,6 +11,14 @@
 
 		mounted() {
 			let self = this;
+
+
+			var ws = new WebSocket("ws://localhost:3000");
+			ws.onmessage = function (event) {
+				console.log('Server time: ' + event.data);
+			};
+
+		 self.ws = ws;
 			self.initializeCamera(self);
 			self.initializeTracker(self);
 		},
@@ -68,7 +76,9 @@
 				if (context && self.video.src) {
 					context.drawImage(self.video, 0, 0, self.video.width, self.video.height);
 					let data = context.getImageData(0, 0, self.video.width, self.video.height).data;
-					self.trackingWorker.postMessage({data: data, width: self.video.width, height: self.video.height});
+
+					self.ws.send(data);
+				//self.trackingWorker.postMessage({data: data, width: self.video.width, height: self.video.height});
 				}
 			},
 
