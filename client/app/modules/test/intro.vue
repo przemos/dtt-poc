@@ -111,7 +111,7 @@
 					// brfManager.setFaceDetectionParams(maxFaceSize * .3, maxFaceSize * 1, 12, 8);
 					//brfManager.setNumFacesToTrack(2);
 
-					setInterval(trackFaces, 1000 / 2);
+					setInterval(trackFaces, 1000 / 3);
 				}
 
 				function trackFaces() {
