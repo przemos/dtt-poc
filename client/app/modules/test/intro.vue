@@ -71,7 +71,7 @@
 						onStreamDimensionsAvailable();
 					}
 
-					window.navigator.mediaDevices.getUserMedia({video: {width: 640, height: 480, frameRate: 30}})
+					window.navigator.mediaDevices.getUserMedia({video: {width: 320, height: 200, frameRate: 30}})
 						.then(onStreamFetched).catch(function () {
 						alert("No camera available.");
 					});
@@ -106,12 +106,12 @@
 					brfManager = new brfv4.BRFManager();
 					brfManager.init(resolution, resolution, "com.tastenkunst.brfv4.js.examples.minimal.webcam");
 
-					brfManager.setMode(brfv4.BRFMode.FACE_DETECTION);
-					let maxFaceSize = 480;
-					brfManager.setFaceDetectionParams(maxFaceSize * .3, maxFaceSize * 1, 12, 8);
+					// brfManager.setMode(brfv4.BRFMode.FACE_DETECTION);
+					// let maxFaceSize = 480;
+					// brfManager.setFaceDetectionParams(maxFaceSize * .3, maxFaceSize * 1, 12, 8);
 					//brfManager.setNumFacesToTrack(2);
 
-					setInterval(trackFaces, 1000 / 5);
+					setInterval(trackFaces, 1000 / 2);
 				}
 
 				function trackFaces() {
@@ -129,8 +129,8 @@
 
 					console.log(faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length);
 
-					//document.querySelector('#faces').innerHTML = faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length
-					document.querySelector('#faces').innerHTML = brfManager.getMergedDetectedFaces().length;
+					document.querySelector('#faces').innerHTML = faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length
+					document.querySelector('#faces').innerHTML += "  " + brfManager.getMergedDetectedFaces().length;
 				}
 			}
 
