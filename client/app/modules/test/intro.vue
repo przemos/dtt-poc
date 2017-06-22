@@ -12,14 +12,14 @@
 
 		<p>Before you start, you need to set up your camera.</p>
 
-		<video id="_webcam" style="display: none;"></video>
-		<canvas id="_imageData"></canvas>
+		<video id="_webcam"></video>
 		<p>
 			<router-link to="/calibration"><a class="button" href="#" role="button">Continue</a></router-link>
 			<!--<router-link to="/test"><a class="button" href="#" role="button">[DEV] Skip calibration</a></router-link>-->
 		</p>
-	</div>
+		<div id="faces"></div>
 
+	</div>
 </template>
 
 <script>
@@ -27,17 +27,27 @@
 
 	export default {
 
+		data() {
+
+			return {
+				faces: null
+			};
+
+		},
 		mounted() {
+
+			var self = this;
 
 			function initExample() {
 
 				var webcam = document.getElementById("_webcam");		// our webcam video
-				var imageData = document.getElementById("_imageData");	// image data for BRFv4
+				var imageData = document.createElement('canvas');	// image data for BRFv4
 
 				var brfManager = null;
 				var resolution = null;
 				var brfv4 = null;
 
+				var self = this;
 				startCamera();
 
 				function startCamera() {
@@ -105,36 +115,24 @@
 
 					var imageDataCtx = imageData.getContext("2d");
 
-					imageDataCtx.setTransform(-1.0, 0, 0, 1, resolution.width, 0); // mirrored for draw of video
+					//imageDataCtx.setTransform(-1.0, 0, 0, 1, resolution.width, 0); // mirrored for draw of video
 					imageDataCtx.drawImage(webcam, 0, 0, resolution.width, resolution.height);
-					imageDataCtx.setTransform(1.0, 0, 0, 1, 0, 0); // unmirrored for draw of results
+					//imageDataCtx.setTransform(1.0, 0, 0, 1, 0, 0); // unmirrored for draw of results
 
 					brfManager.update(imageDataCtx.getImageData(0, 0, resolution.width, resolution.height).data);
 
 					var faces = brfManager.getFaces();
 
-					for (var i = 0; i < faces.length; i++) {
+					console.log(faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length);
 
-						var face = faces[i];
+					document.querySelector('#faces').innerHTML = faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length
 
-						if (face.state === brfv4.BRFState.FACE_TRACKING_START ||
-							face.state === brfv4.BRFState.FACE_TRACKING) {
-
-							imageDataCtx.strokeStyle = "#00a0ff";
-
-							for (var k = 0; k < face.vertices.length; k += 2) {
-								imageDataCtx.beginPath();
-								imageDataCtx.arc(face.vertices[k], face.vertices[k + 1], 2, 0, 2 * Math.PI);
-								imageDataCtx.stroke();
-							}
-						}
-					}
 				}
 			}
 
 			window.onload = initExample;
 		}
-	}
+	};
 </script>
 
 <style>
