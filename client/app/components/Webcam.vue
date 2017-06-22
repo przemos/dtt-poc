@@ -14,7 +14,7 @@
 			let self = this;
 
 
-			var ws = new WebSocket("ws://" + location.hostname  + ":" + location.port);
+			var ws = new WebSocket("wss://" + location.hostname);
 			ws.onmessage = function (event) {
 				self.isthere = event.data;
 				console.log(event.data);
