@@ -96,7 +96,9 @@
 					brfManager = new brfv4.BRFManager();
 					brfManager.init(resolution, resolution, "com.tastenkunst.brfv4.js.examples.minimal.webcam");
 
-					setInterval(trackFaces, 1000 / 30);
+					brfManager.setNumFacesToTrack(2);
+
+					setInterval(trackFaces, 1000 / 5);
 				}
 
 				function trackFaces() {
