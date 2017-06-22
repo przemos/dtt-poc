@@ -56,7 +56,7 @@
 					// TODO - should be actions
 					this.$store.commit(TestStoreOps.LOAD_QUESTIONS, response.data.questions);
 
-					$("#camera-status").stick_in_parent();
+					setTimeout(function() { $("#camera-status").stick_in_parent();}, 1000);
 
 					this.$on('webcamEvent', function (value) {
 						this.$store.commit(TestStoreOps.LOAD_WEBCAM_EVENT, value);

@@ -1,23 +1,25 @@
 <template>
 	<div>
 		<h2 class="heading-large">Camera calibration</h2>
-		<div class="topbar" id="camera-status">
-			<div class="grid-row">
 
-				<div class="column-one-third">
-					<div v-bind:class="[isInCamera ? '' : 'camera-status-hidden', 'badge--success']"><i
-						class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct
-					</div>
-					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i
-						class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
-					</div>
-
-				</div>
-			</div>
-		</div>
 		<div class="message--important" >
 			<p>Please adjust yourself in front of your camera and click "Continue".</p>
 		</div>
+
+	<div class="topbar" id="camera-status">
+		<div class="grid-row">
+
+			<div class="column-one-third">
+				<div v-bind:class="[isInCamera ? '' : 'camera-status-hidden', 'badge--success']"><i
+					class="fa fa-video-camera blink"></i>&nbsp;&nbsp;Head position correct
+				</div>
+				<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i
+					class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
+				</div>
+
+			</div>
+		</div>
+	</div>
 		<div >
 			<Webcam />
 		</div>
