@@ -126,10 +126,11 @@
 
 					var faces = brfManager.getFaces();
 
+
 					console.log(faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length);
 
-					document.querySelector('#faces').innerHTML = faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length
-
+					//document.querySelector('#faces').innerHTML = faces.filter(x => x.state === brfv4.BRFState.FACE_TRACKING).length
+					document.querySelector('#faces').innerHTML = brfManager.getMergedDetectedFaces().length;
 				}
 			}
 
