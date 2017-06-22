@@ -108,7 +108,7 @@
 
 					brfManager.setMode(brfv4.BRFMode.FACE_DETECTION);
 					let maxFaceSize = 480;
-					brfManager.setFaceDetectionParams(maxFaceSize * .6, maxFaceSize * 1, 12, 8);
+					brfManager.setFaceDetectionParams(maxFaceSize * .3, maxFaceSize * 1, 12, 8);
 					//brfManager.setNumFacesToTrack(2);
 
 					setInterval(trackFaces, 1000 / 5);
