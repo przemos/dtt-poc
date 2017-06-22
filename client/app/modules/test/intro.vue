@@ -71,7 +71,7 @@
 						onStreamDimensionsAvailable();
 					}
 
-					window.navigator.mediaDevices.getUserMedia({video: {width: 320, height: 200, frameRate: 30}})
+					window.navigator.mediaDevices.getUserMedia({video: {width: 640, height: 480, frameRate: 30}})
 						.then(onStreamFetched).catch(function () {
 						alert("No camera available.");
 					});
@@ -105,6 +105,8 @@
 
 					brfManager = new brfv4.BRFManager();
 					brfManager.init(resolution, resolution, "com.tastenkunst.brfv4.js.examples.minimal.webcam");
+
+					brfManager.setFaceDetectionParams(144, 432, 12, 8);
 
 					// brfManager.setMode(brfv4.BRFMode.FACE_DETECTION);
 					// let maxFaceSize = 480;
