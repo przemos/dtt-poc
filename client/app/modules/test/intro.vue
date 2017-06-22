@@ -106,7 +106,10 @@
 					brfManager = new brfv4.BRFManager();
 					brfManager.init(resolution, resolution, "com.tastenkunst.brfv4.js.examples.minimal.webcam");
 
-					brfManager.setNumFacesToTrack(2);
+					brfManager.setMode(brfv4.BRFMode.FACE_DETECTION);
+					let maxFaceSize = 480;
+					brfManager.setFaceDetectionParams(maxFaceSize * .6, maxFaceSize * 1, 12, 8);
+					//brfManager.setNumFacesToTrack(2);
 
 					setInterval(trackFaces, 1000 / 5);
 				}
