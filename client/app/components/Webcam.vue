@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<video id="userWebcam" width="300" height="255" preload autoplay loop muted></video>
+		{{isthere}}
 	</div>
 </template>
 <script>
@@ -15,7 +16,8 @@
 
 			var ws = new WebSocket("ws://localhost:3000");
 			ws.onmessage = function (event) {
-				console.log('Server time: ' + event.data);
+				self.isthere = event.data;
+				console.log(event.data);
 			};
 
 		 self.ws = ws;
@@ -27,7 +29,8 @@
 				now: null,
 				lastTimeSeen: new Date().getTime(),
 				tracker: null,
-				video: null
+				video: null,
+				isthere : null
 			};
 		},
 		methods: {

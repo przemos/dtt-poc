@@ -53,7 +53,13 @@ wss.on('connection', (ws) => {
 
 		brfManager.update(message);
 		var faces = brfManager.getFaces();
-		console.log(faces[0].state);
+
+		wss.clients.forEach((client) => {
+
+			console.log(faces[0].state);
+			client.send(faces[0].state);
+		});
+
 	});
 });
 
