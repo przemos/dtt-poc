@@ -4,14 +4,14 @@
 			<h1 class="transaction-header__title">{{outcomeText()}}</h1>
 			<p class="transaction-header__next-step">{{outcomeAuxText()}}</p>
 
-			<table class="c-transaction-details c-transaction-details--four">
+			<table class="c-transaction-details c-transaction-details--three">
 				<tbody>
 				<tr class="c-transaction-details__item c-transaction-details__item--first">
 					<th class="c-transaction-details__key">Your score</th>
 					<td class="c-transaction-details__value">{{scoreText}}</td>
 				</tr>
 
-				<tr class="c-transaction-details__item" style="text-align:center">
+				<tr class="c-transaction-details__item">
 					<th class="c-transaction-details__key">Outcome</th>
 					<td class="c-transaction-details__value">{{statusText()}}</td>
 				</tr>
