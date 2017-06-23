@@ -131,7 +131,7 @@
 				return this.$store.getters.numberOfTimesFaceWasKeptOffCamera > 5;
 			},
 			isMoreThanOneFaceAppeared: function () {
-				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared > 1;
+				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared > 0;
 			},
 			outcomeText : function () {
 				return this.isPassed() ? 'Theory Test completed' : 'Theory Test failed';

@@ -89,7 +89,7 @@
 				return this.mode === "question";
 			},
 			isMoreThanOneFaceAppeared: function () {
-				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared > 1;
+				return this.$store.getters.numberOfTimesMoreThanOneFaceAppeared > 0;
 			},
 			changeView: function (target) {
 
