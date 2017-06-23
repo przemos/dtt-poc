@@ -10,7 +10,7 @@
 					<div v-bind:class="[isInCamera ? 'camera-status-hidden' : '', 'badge--alert fast-blink']"><i
 						class="fa fa-video-camera"></i>&nbsp;&nbsp;Your face is off the camera
 					</div>
-
+					<span v-if="isMoreThanOneFaceAppeared()" style="float:right">o</span>
 				</div>
 
 				<div class="column-one-third">
@@ -30,7 +30,6 @@
 			<div class="column-two-thirds">
 				<question v-if="totalCount > 0 && mode == 'question' " v-on:action="changeView($event)"></question>
 				<review v-if="mode == 'review' " v-on:action="changeView($event)"></review>
-				<p v-if="isMoreThanOneFaceAppeared()" style="float:right">o</p>
 			</div>
 		</div>
 	</div>
